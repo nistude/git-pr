@@ -1,6 +1,6 @@
 # Git::Pr
 
-TODO: Write a gem description
+`git-pr` facilitates GitHub pull requests.
 
 ## Installation
 
@@ -18,7 +18,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Submit a pull request for the current branch:
+
+    $ git pr submit --title "my title" --body "longer description"
 
 ## Contributing
 
