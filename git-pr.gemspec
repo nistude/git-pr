@@ -19,8 +19,10 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_development_dependency 'bundler', '~> 1.3'
+  spec.add_development_dependency 'pry-debugger'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
 
-  spec.add_runtime_dependency 'octokit'
+  spec.add_runtime_dependency 'octokit', '~> 2.6'
+  spec.add_runtime_dependency 'virtus', '~> 1.0'
 end
