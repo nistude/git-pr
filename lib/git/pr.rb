@@ -1,7 +1,6 @@
-require 'octokit'
-
 require 'git/pr/cli_options'
 require 'git/pr/git_properties'
+require 'git/pr/github'
 require 'git/pr/version'
 
 module Git
@@ -11,13 +10,11 @@ module Git
     end
 
     def initialize(args)
-      @args = args
-      @git = GitProperties.new
+      @options = CliOptions.parse(args)
+      @github = GitHub.new(GitProperties.new)
     end
 
     def run
-      @options = CliOptions.parse(@args)
-      setup_credentials
       if self.respond_to?(@options.subcommand)
         self.send(@options.subcommand)
       else
@@ -28,21 +25,10 @@ module Git
     end
 
     def submit
-      Octokit.create_pull_request(@git.repository,
-                                  @git.base_branch,
-                                  @git.current_branch,
-                                  @options.title,
-                                  @options.message)
+      @github.submit_pull_request(@options.title, @options.message)
     end
 
     private
-    def setup_credentials
-      Octokit.configure do |c|
-        c.login = @git.login
-        c.password = @git.api_token
-      end
-    end
-
     def be_helpful(message = nil)
       puts message
       puts <<-USAGE
