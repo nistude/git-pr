@@ -1,6 +1,6 @@
 # Git::Pr
 
-TODO: Write a gem description
+`git-pr` facilitates GitHub pull requests.
 
 ## Installation
 
@@ -16,9 +16,19 @@ Or install it yourself as:
 
     $ gem install git-pr
 
+## Configuration
+
+Setup a [personal access token](https://github.com/settings/applications)
+and configure your git for github:
+
+    $ git config --global github.user your_github_user_name
+    $ git config --global github.token your_github_personal_access_token
+
 ## Usage
 
-TODO: Write usage instructions here
+Submit a pull request for the current branch:
+
+    $ git pr submit --title "my title" --body "longer description"
 
 ## Contributing
 
