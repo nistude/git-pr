@@ -12,7 +12,7 @@ describe Git::Pr::CliOptions do
   context 'when the subcommand is unknown' do
     it 'raises an error' do
       expect { Git::Pr::CliOptions.parse(['foo']) }.to \
-        raise_error Git::Pr::CliOptions::Invalid, 'unknown subcommand'
+        raise_error Git::Pr::CliOptions::Invalid, 'unknown subcommand: foo'
     end
   end
 
@@ -40,7 +40,7 @@ describe Git::Pr::CliOptions do
       end
 
       it 'raises an error for missing arguments' do
-        expect { Git::Pr::CliOptions.parse(['submit', '--title', 'foo']) }.to \
+        expect { Git::Pr::CliOptions.parse(['submit', '--message', 'foo']) }.to \
           raise_error Git::Pr::CliOptions::Invalid, 'missing arguments'
       end
     end
