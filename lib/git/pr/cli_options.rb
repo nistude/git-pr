@@ -31,7 +31,7 @@ module Git
           when 'help', '-h'
             # just return, will display help
           when 'submit'
-            mandatory = [:title, :message]
+            mandatory = [:title]
             opts.on('--title TITLE') { |title| self.title = title }
             opts.on('--message MESSAGE') { |message| self.message = message }
           else

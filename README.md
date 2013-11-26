@@ -28,7 +28,7 @@ and configure your git for github:
 
 Submit a pull request for the current branch:
 
-    $ git pr submit --title "my title" --body "longer description"
+    $ git pr submit --title "my title" --message "longer description"
 
 ## Contributing
 
