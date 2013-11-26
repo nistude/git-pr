@@ -10,11 +10,12 @@ module Git
     end
 
     def initialize(args)
-      @options = CliOptions.parse(args)
+      @args = args
       @github = GitHub.new(GitProperties.new)
     end
 
     def run
+      @options = CliOptions.parse(@args)
       if self.respond_to?(@options.subcommand)
         self.send(@options.subcommand)
       else
@@ -34,9 +35,10 @@ module Git
 
     private
     def be_helpful(message = nil)
-      puts message
+      puts message if message
       puts <<-USAGE
-Usage: git pr list [state] [--reverse]
+Usage: git pr help|-h
+   or: git pr list
    or: git pr submit --title TITLE --message MESSAGE
       USAGE
     end

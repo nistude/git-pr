@@ -28,12 +28,14 @@ module Git
 
         OptionParser.new do |opts|
           case subcommand
+          when 'help', '-h'
+            # just return, will display help
           when 'submit'
             mandatory = [:title, :message]
             opts.on('--title TITLE') { |title| self.title = title }
             opts.on('--message MESSAGE') { |message| self.message = message }
           else
-            raise(Invalid, 'unknown subcommand')
+            raise(Invalid, "unknown subcommand: #{subcommand}")
           end
         end.parse!(@args)
         validate_options(mandatory)
