@@ -1,5 +1,7 @@
 # Git::Pr
 
+[![Build Status](https://secure.travis-ci.org/nistude/git-pr.png?branch=master)](http://travis-ci.org/nistude/git-pr)
+
 `git-pr` facilitates GitHub pull requests.
 
 ## Installation
