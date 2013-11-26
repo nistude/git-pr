@@ -39,7 +39,7 @@ module Git
       puts <<-USAGE
 Usage: git pr help|-h
    or: git pr list
-   or: git pr submit --title TITLE --message MESSAGE
+   or: git pr submit --title TITLE [--message MESSAGE]
       USAGE
     end
   end
