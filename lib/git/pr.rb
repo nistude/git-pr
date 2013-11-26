@@ -25,7 +25,11 @@ module Git
     end
 
     def submit
-      @github.submit_pull_request(@options.title, @options.message)
+      pr = @github.submit_pull_request(@options.title, @options.message)
+      puts "Opened new pull request to merge #{pr.head.ref} into #{pr.base.repo.full_name}/#{pr.base.ref}"
+    rescue GitHub::Failed => e
+      $stderr.puts "Failed to open new pull request: #{e.message}"
+      exit 1
     end
 
     private
