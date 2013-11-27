@@ -25,6 +25,13 @@ module Git
       be_helpful(e.message)
     end
 
+    def list
+      prs = @github.list_pull_requests(@options.list_all, @options.mine)
+      prs.each do |pr|
+        puts pr
+      end
+    end
+
     def submit
       pr = @github.submit_pull_request(@options.title, @options.message)
       puts "Opened new pull request to merge #{pr.head.ref} into #{pr.base.repo.full_name}/#{pr.base.ref}"
@@ -33,13 +40,17 @@ module Git
       exit 1
     end
 
+    def version
+      puts Git::Pr::VERSION
+    end
+
     private
     def be_helpful(message = nil)
       puts message if message
       puts <<-USAGE
-Usage: git pr help|-h
-   or: git pr list
-   or: git pr submit --title TITLE [--message MESSAGE]
+Usage: git pr list [options]
+   or: git pr submit [options]
+   or: git pr version
       USAGE
     end
   end

@@ -30,6 +30,12 @@ and configure your git for github:
 
 ## Usage
 
+List pull requests
+
+    $ git pr list              # all open pull requests for the active repository
+    $ git pr list --all        # all open pull requests for all my repositories
+    $ git pr list --all --mine # all my open pull requests for all my repositories
+
 Submit a pull request for the current branch:
 
     $ git pr submit --title "my title" --message "longer description"
