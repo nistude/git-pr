@@ -29,7 +29,7 @@ module Git
       prs = @github.list_pull_requests(@options.list_all, @options.mine)
       prs.each do |pr|
         message = "#{pr.base.repo.full_name}(#{pr.user.login}) #{pr.title}"
-        link = " (#{pr._links.html.href}) ".rjust(terminal_size - message.size)
+        link = " #{pr._links.html.href} ".rjust(terminal_size - message.size)
         puts message + link
       end
       puts 'No open pull requests' if prs.empty?
