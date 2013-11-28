@@ -15,7 +15,20 @@ module Git
       end
 
       def list_pull_requests(all, mine)
-        Octokit.pull_requests(@git.repository, 'open')
+        repositories = [@git.repository]
+
+        if all
+          Octokit.organizations.map(&:login).each do |org|
+            # XXX pagination?
+            repositories << Octokit.organization_repositories(org, per_page: 100).map(&:full_name)
+          end
+        end
+
+        [].tap do |prs|
+          repositories.flatten.uniq.each do |repo|
+            prs << Octokit.pull_requests(repo, 'open')
+          end
+        end.flatten
       end
 
       def submit_pull_request(title, message)
