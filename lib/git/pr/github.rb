@@ -14,6 +14,10 @@ module Git
         end
       end
 
+      def list_pull_requests(all, mine)
+        Octokit.pull_requests(@git.repository, 'open')
+      end
+
       def submit_pull_request(title, message)
         response = Octokit.create_pull_request(@git.repository,
                                                @git.base_branch,

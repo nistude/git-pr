@@ -28,8 +28,11 @@ module Git
     def list
       prs = @github.list_pull_requests(@options.list_all, @options.mine)
       prs.each do |pr|
-        puts pr
+        message = "#{pr.base.repo.full_name}(#{pr.user.login}) #{pr.title}"
+        link = " (#{pr._links.html.href}) ".rjust(terminal_size - message.size)
+        puts message + link
       end
+      puts 'No open pull requests' if prs.empty?
     end
 
     def submit
@@ -52,6 +55,16 @@ Usage: git pr list [options]
    or: git pr submit [options]
    or: git pr version
       USAGE
+    end
+
+    def terminal_size
+      command_exists?('tput') ? `tput cols`.to_i : 80
+    end
+
+    def command_exists?(command)
+      ENV['PATH'].split(File::PATH_SEPARATOR).any? do |dir|
+        File.exists?(File.join(dir, command))
+      end
     end
   end
 end
