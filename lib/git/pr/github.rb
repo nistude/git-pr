@@ -26,7 +26,12 @@ module Git
 
         [].tap do |prs|
           repositories.flatten.uniq.each do |repo|
-            prs << Octokit.pull_requests(repo, 'open')
+            pull_requests = Octokit.pull_requests(repo, 'open')
+            if mine
+              prs << pull_requests.select { |pr| pr.user.login == @git.login }
+            else
+              prs << pull_requests
+            end
           end
         end.flatten
       end
