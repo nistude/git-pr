@@ -14,6 +14,25 @@ module Git
         end
       end
 
+      def list_pull_requests(profile, mine)
+        if profile
+          repositories = @git.repository_profile(profile)
+        else
+          repositories = [@git.repository]
+        end
+
+        [].tap do |prs|
+          repositories.flatten.uniq.each do |repo|
+            pull_requests = Octokit.pull_requests(repo, 'open')
+            if mine
+              prs << pull_requests.select { |pr| pr.user.login == @git.login }
+            else
+              prs << pull_requests
+            end
+          end
+        end.flatten
+      end
+
       def submit_pull_request(title, message)
         response = Octokit.create_pull_request(@git.repository,
                                                @git.base_branch,

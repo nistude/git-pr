@@ -35,4 +35,12 @@ describe Git::Pr::GitProperties do
       expect(git.login).to eq 'foo'
     end
   end
+
+  describe '#repository_profile' do
+    it 'returns an array of repositories in the given profile' do
+      git.stub(:`).with(/pr.repository_profile.foo/).and_return("repo/one\nrepo/two\n")
+
+      expect(git.repository_profile('foo')).to eq ['repo/one', 'repo/two']
+    end
+  end
 end

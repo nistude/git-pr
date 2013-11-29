@@ -25,6 +25,11 @@ module Git
       be_helpful(e.message)
     end
 
+    def list
+      prs = @github.list_pull_requests(@options.profile, @options.mine)
+      puts formatted(prs)
+    end
+
     def submit
       pr = @github.submit_pull_request(@options.title, @options.message)
       puts "Opened new pull request to merge #{pr.head.ref} into #{pr.base.repo.full_name}/#{pr.base.ref}"
@@ -33,14 +38,40 @@ module Git
       exit 1
     end
 
+    def version
+      puts Git::Pr::VERSION
+    end
+
     private
     def be_helpful(message = nil)
       puts message if message
       puts <<-USAGE
-Usage: git pr help|-h
-   or: git pr list
-   or: git pr submit --title TITLE [--message MESSAGE]
+Usage: git pr list [options]
+   or: git pr submit [options]
+   or: git pr version
       USAGE
+    end
+
+    def terminal_size
+      command_exists?('tput') ? `tput cols`.to_i : 80
+    end
+
+    def command_exists?(command)
+      ENV['PATH'].split(File::PATH_SEPARATOR).any? do |dir|
+        File.exists?(File.join(dir, command))
+      end
+    end
+
+    def formatted(prs)
+      if prs.empty?
+        'No open pull requests'
+      else
+        prs.map do |pr|
+          message = "#{pr.base.repo.full_name}: #{pr.title} -- (#{pr.user.login})"
+          link = " #{pr._links.html.href} ".rjust(terminal_size - message.size)
+          message + link
+        end.join("\n")
+      end
     end
   end
 end
