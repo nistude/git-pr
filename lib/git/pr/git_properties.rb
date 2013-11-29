@@ -20,6 +20,10 @@ module Git
       def login
         `git config --get github.user`.chomp
       end
+
+      def repository_profile(profile)
+        `git config --get-all pr.repository_profile.#{profile}`.split(/\n/)
+      end
     end
   end
 end

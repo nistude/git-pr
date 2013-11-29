@@ -26,13 +26,8 @@ module Git
     end
 
     def list
-      prs = @github.list_pull_requests(@options.list_all, @options.mine)
-      prs.each do |pr|
-        message = "#{pr.base.repo.full_name}(#{pr.user.login}) #{pr.title}"
-        link = " #{pr._links.html.href} ".rjust(terminal_size - message.size)
-        puts message + link
-      end
-      puts 'No open pull requests' if prs.empty?
+      prs = @github.list_pull_requests(@options.profile, @options.mine)
+      puts formatted(prs)
     end
 
     def submit
@@ -64,6 +59,18 @@ Usage: git pr list [options]
     def command_exists?(command)
       ENV['PATH'].split(File::PATH_SEPARATOR).any? do |dir|
         File.exists?(File.join(dir, command))
+      end
+    end
+
+    def formatted(prs)
+      if prs.empty?
+        'No open pull requests'
+      else
+        prs.map do |pr|
+          message = "#{pr.base.repo.full_name}: #{pr.title} -- (#{pr.user.login})"
+          link = " #{pr._links.html.href} ".rjust(terminal_size - message.size)
+          message + link
+        end.join("\n")
       end
     end
   end

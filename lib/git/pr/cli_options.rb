@@ -9,8 +9,8 @@ module Git
       values do
         attribute :subcommand
         # list
-        attribute :list_all, Boolean, default: false
         attribute :mine, Boolean, default: false
+        attribute :profile
         # submit
         attribute :title
         attribute :message
@@ -36,13 +36,13 @@ module Git
           when 'help', '-h', 'version'
             # no specific options
           when 'list'
-            opts.on('-a', '--all',
-                    'Show pull requests for all my repositories') do
-              self.list_all = true
-            end
             opts.on('-m', '--mine',
                     'Show only my pull requests') do
               self.mine = true
+            end
+            opts.on('-p', '--profile PROFILE',
+                    'Show pull requests for all repositories in profile') do |profile|
+              self.profile = profile
             end
           when 'submit'
             mandatory = [:title]

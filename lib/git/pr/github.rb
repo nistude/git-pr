@@ -14,14 +14,11 @@ module Git
         end
       end
 
-      def list_pull_requests(all, mine)
-        repositories = [@git.repository]
-
-        if all
-          Octokit.organizations.map(&:login).each do |org|
-            # XXX pagination?
-            repositories << Octokit.organization_repositories(org, per_page: 100).map(&:full_name)
-          end
+      def list_pull_requests(profile, mine)
+        if profile
+          repositories = @git.repository_profile(profile)
+        else
+          repositories = [@git.repository]
         end
 
         [].tap do |prs|

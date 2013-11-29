@@ -30,11 +30,16 @@ and configure your git for github:
 
 ## Usage
 
-List pull requests
+List pull requests:
 
-    $ git pr list              # all open pull requests for the active repository
-    $ git pr list --all        # all open pull requests for all my repositories
-    $ git pr list --all --mine # all my open pull requests for all my repositories
+    $ git pr list                # open pull requests for the active repository
+
+You can also configure repository profiles and use those to query multiple
+repositories at once:
+
+    $ git config --global --add pr.repository_profile.work org/one
+    $ git config --global --add pr.repository_profile.work org/two
+    $ git pr list --profile work # open pull requests for 'org/one', 'org/two'
 
 Submit a pull request for the current branch:
 
