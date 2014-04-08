@@ -11,6 +11,7 @@ module Git
         Octokit.configure do |c|
           c.login = @git.login
           c.password = @git.api_token
+          c.api_endpoint = @git.api_endpoint unless @git.api_endpoint.empty?
         end
       end
 

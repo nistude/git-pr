@@ -1,6 +1,10 @@
 module Git
   class Pr
     class GitProperties
+      def api_endpoint
+        `git config --get github.apiEndpoint`.chomp
+      end
+
       def api_token
         `git config --get github.token`.chomp
       end

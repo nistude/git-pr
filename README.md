@@ -29,6 +29,10 @@ and configure your git for github:
     $ git config --global github.user your_github_user_name
     $ git config --global github.token your_github_personal_access_token
 
+To use a private GitHub Enterprise installation:
+
+    $ git config --global github.apiEndpoint https://my.server/api/v3
+
 ## Usage
 
 List pull requests:
