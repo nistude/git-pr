@@ -38,6 +38,8 @@ To use a private GitHub Enterprise installation:
 List pull requests:
 
     $ git pr list                # open pull requests for the active repository
+    $ git pr list --all          # open pull requests for all my user and
+                                 # organization repositories
 
 You can also configure repository profiles and use those to query multiple
 repositories at once:

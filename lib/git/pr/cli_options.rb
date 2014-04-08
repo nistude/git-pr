@@ -36,6 +36,10 @@ module Git
           when 'help', '-h', 'version'
             # no specific options
           when 'list'
+            opts.on('-a', '--all',
+                    'Show pull requests for all repositories') do
+              self.profile = :all
+            end
             opts.on('-m', '--mine',
                     'Show only my pull requests') do
               self.mine = true

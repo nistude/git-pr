@@ -17,7 +17,8 @@ module Git
 
       def list_pull_requests(profile, mine)
         if profile
-          repositories = @git.repository_profile(profile)
+          repositories = profile == :all ? all_repositories
+                                         : @git.repository_profile(profile)
         else
           repositories = [@git.repository]
         end
@@ -44,6 +45,18 @@ module Git
       rescue Octokit::UnprocessableEntity => e
         message = e.message.match(/message: (.*)/)[1].sub(/ \/\/.*/, '')
         raise Failed, message
+      end
+
+      private
+      def all_repositories
+        repositories = []
+
+        Octokit.organizations.map(&:login).each do |org|
+          repositories << Octokit.organization_repositories(org).map(&:full_name)
+        end
+        repositories << Octokit.repositories.map(&:full_name)
+
+        repositories
       end
     end
   end
