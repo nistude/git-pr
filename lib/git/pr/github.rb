@@ -12,6 +12,7 @@ module Git
           c.login = @git.login
           c.password = @git.api_token
           c.api_endpoint = @git.api_endpoint unless @git.api_endpoint.empty?
+          c.auto_paginate = true
         end
       end
 
