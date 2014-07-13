@@ -52,6 +52,10 @@ Submit a pull request for the current branch:
 
     $ git pr submit --title "my title" --message "longer description"
 
+Comment on an existing pull request:
+
+    $ git pr comment 
+
 ## Contributing
 
 1. Fork it
